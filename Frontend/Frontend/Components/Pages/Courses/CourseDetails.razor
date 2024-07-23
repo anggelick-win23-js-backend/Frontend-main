@@ -1,0 +1,68 @@
+﻿@page "/course/{id}"
+@using Frontend.Components.Models
+@using Frontend.Components.Models.GraphQL
+@using Frontend.Components.Pages.Courses.CourseDetailsComponents
+@using Newtonsoft.Json
+@using System.Text
+
+@attribute [StreamRendering]
+@inject HttpClient http
+@inject IConfiguration config
+
+@code {
+    [Parameter] 
+    public string Id { get; set; }
+
+    private CourseModel course { get; set; } = null!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        int queryId = Convert.ToInt32(Id);
+
+        var query = new GraphQLQuery
+        {
+            Query = "query($id: Int!) { GetCourseById(id: $id) { id name description ingress price hoursToComplete likesPercentage likesAmount image authorName authorDescription authorImage authorYoutubeFollowersQty authorFacebookFollowersQty } }",
+            Variables = new Variables
+            {
+                Id = queryId
+            }
+        };
+
+        var response = await http.PostAsJsonAsync(config["Api_CourseProvider_GraphQL"], query);
+
+        var responseString = await response.Content.ReadAsStringAsync();
+
+        var rootObject = JsonConvert.DeserializeObject<DynamicGraphQLResponse>(responseString);
+
+        course = rootObject.Data.GetCourseById;
+    }
+}
+
+@if (course == null)
+{
+    <section class="course-content">
+
+        <div class="container">
+            <div class="spinners">
+                <div class="spinner-grow text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <div class="spinner-grow text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <div class="spinner-grow text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </div>
+
+    </section>
+}
+else
+{
+    <CourseShowcase Course="@course" />
+
+    <CourseContent Course="@course" />
+
+    <CourseAuthor Course="@course" />
+}

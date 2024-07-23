@@ -1,0 +1,56 @@
+﻿@page "/account/notifications"
+
+@using System.ComponentModel.DataAnnotations
+@using Frontend.Components.Models.Requests
+@using Frontend.Components.Sections
+@using Microsoft.AspNetCore.Identity
+@using Frontend.Data
+@using Newtonsoft.Json
+@using System.Text
+
+@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+@inject HttpClient http
+@inject IConfiguration config
+
+<PageTitle>Profile - Notifications</PageTitle>
+
+<AuthorizeView Context="authContext">
+    <Authorized>
+        <section class="account-notifications">
+
+            <div class="container">
+
+                <AccountMenu user="@user" />
+
+                <NewsletterForm user="@user" />                
+
+            </div>
+        </section>
+    </Authorized>
+
+    <NotAuthorized>
+        <Login />
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    private ApplicationUser user { get; set; } = new();
+
+    [CascadingParameter]
+    private HttpContext HttpContext { get; set; } = default!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await UserManager.GetUserAsync(HttpContext.User) ?? null!;
+
+        if (result != null)
+        {
+            try
+            {
+                user = result;
+            }
+            catch { }
+        }
+    }
+}

@@ -1,0 +1,48 @@
+﻿@page "/account/details"
+
+@using System.ComponentModel.DataAnnotations
+@using Frontend.Components.Sections
+@using Microsoft.AspNetCore.Identity
+@using Frontend.Data
+@using Microsoft.EntityFrameworkCore
+
+@attribute [StreamRendering]
+
+@* @rendermode InteractiveServer  *@
+
+@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+@inject IJSRuntime JSRuntime
+
+
+<PageTitle>Profile</PageTitle>
+
+
+<AuthorizeView Context="authContext">
+    <Authorized>
+
+
+        <AccountForm user="@user"/>
+
+    </Authorized>
+
+    <NotAuthorized>
+        <Login />
+    </NotAuthorized>
+
+</AuthorizeView>
+
+
+
+@code {
+    private ApplicationUser user { get; set; } = new();
+
+    [CascadingParameter]
+    private HttpContext HttpContext { get; set; } = default!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        user = await UserManager.GetUserAsync(HttpContext.User) ?? null!;
+
+    }
+}
