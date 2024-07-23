@@ -53,4 +53,4 @@ jobs:
           app-name: 'win23jsbackend-anggelick'
           slot-name: 'Production'
           package: .
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_2E8FA1C4C25E449DAE5CCC538EFB63C9 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_D237D991401D4F1298ECA4F00A426584 }}
