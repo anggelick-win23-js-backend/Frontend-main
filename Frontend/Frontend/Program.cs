@@ -5,8 +5,13 @@ using Frontend.Data;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Azure.Identity;
+using Azure.Extensions.AspNetCore.Configuration.Secrets; // Add this using directive
 
 var builder = WebApplication.CreateBuilder(args);
+
+var keyVaultEndpoint = new Uri(Environment.GetEnvironmentVariable("VaultUri"));
+builder.Configuration.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential()); // Use DefaultAzureCredential instead of VisualStudioCredential
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
@@ -15,7 +20,7 @@ builder.Services.AddRazorComponents()
 
 builder.Services.AddHttpClient();
 
-builder.Services.AddCascadingAuthenticationState();
+builder.Services.AddCascadingAuthenticationState(); 
 builder.Services.AddScoped<AuthenticationStateProvider, PersistingRevalidatingAuthenticationStateProvider>();
 
 builder.Services.AddAuthentication(options =>
