@@ -19,11 +19,29 @@ jobs:
         with:
           dotnet-version: '8.x'
 
+      - name: List contents of root directory
+        run: dir
+        shell: pwsh
+
+      - name: List contents of Frontend directory
+        run: dir ./Frontend
+        shell: pwsh
+
+      - name: List contents of Frontend/Frontend directory
+        run: dir ./Frontend/Frontend
+        shell: pwsh
+
       - name: Build with dotnet
-        run: dotnet build --configuration Release ./Frontend/Frontend
+        run: dotnet build ./Frontend/Frontend/Frontend.csproj --configuration Release
+        shell: pwsh
+
+      - name: List contents of Frontend/Frontend/bin/Release directory
+        run: dir ./Frontend/Frontend/bin/Release
+        shell: pwsh
 
       - name: Publish with dotnet
-        run: dotnet publish .Frontend-main/Frontend/Frontend -c Release -o ${{ github.workspace }}/myapp
+        run: dotnet publish ./Frontend/Frontend/Frontend.csproj --configuration Release -o ${{ github.workspace }}/myapp
+        shell: pwsh
 
       - name: List contents of the workspace
         run: dir ${{ github.workspace }}
