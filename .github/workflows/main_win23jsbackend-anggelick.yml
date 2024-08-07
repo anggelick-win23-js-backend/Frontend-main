@@ -23,7 +23,7 @@ jobs:
         run: dotnet build --configuration Release ./Frontend/Frontend
 
       - name: Publish with dotnet
-        run: dotnet publish ./Frontend/Frontend -c Release -o ${{ github.workspace }}/myapp
+        run: dotnet publish .Frontend-main/Frontend/Frontend -c Release -o ${{ github.workspace }}/myapp
 
       - name: List contents of the workspace
         run: dir ${{ github.workspace }}
