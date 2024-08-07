@@ -20,10 +20,10 @@ jobs:
           dotnet-version: '8.x'
 
       - name: Build with dotnet
-        run: dotnet build --configuration Release
+        run: dotnet build --configuration Release --source C:\Projects\Frontend-main\Frontend\Frontend
 
       - name: Publish with dotnet
-        run: dotnet publish -c Release -o ${{ github.workspace }}/myapp
+        run: dotnet publish -c Release -o ${{ github.workspace }}/myapp --source C:\Projects\Frontend-main\Frontend\Frontend
 
       - name: List contents of the workspace
         run: dir ${{ github.workspace }}
