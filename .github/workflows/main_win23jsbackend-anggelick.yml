@@ -39,7 +39,7 @@ jobs:
         run: dotnet publish ./Frontend/Frontend/Frontend.csproj --configuration Release -o ${{ github.workspace }}/myapp
         shell: pwsh
 
-      - name: List contents of myapp directory
+      - name: List contents of myapp directory after publishing
         run: dir ${{ github.workspace }}/myapp
         shell: pwsh
 
