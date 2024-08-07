@@ -35,7 +35,7 @@ jobs:
         run: dotnet build ./Frontend/Frontend/Frontend.csproj --configuration Release
         shell: pwsh
 
-      - name: List contents of Frontend/Frontend/bin/Release directory
+      - name: List contents of bin/Release directory
         run: dir ./Frontend/Frontend/bin/Release
         shell: pwsh
 
