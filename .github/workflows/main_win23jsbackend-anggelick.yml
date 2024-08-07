@@ -35,16 +35,8 @@ jobs:
         run: dotnet build ./Frontend/Frontend/Frontend.csproj --configuration Release
         shell: pwsh
 
-      - name: List contents of bin/Release directory
-        run: dir ./Frontend/Frontend/bin/Release
-        shell: pwsh
-
       - name: Publish with dotnet
         run: dotnet publish ./Frontend/Frontend/Frontend.csproj --configuration Release -o ${{ github.workspace }}/myapp
-        shell: pwsh
-
-      - name: List contents of the workspace
-        run: dir ${{ github.workspace }}
         shell: pwsh
 
       - name: List contents of myapp directory
@@ -70,7 +62,11 @@ jobs:
         with:
           name: .net-app
 
-      - name: List contents of the downloaded artifact
+      - name: List contents of workspace after downloading artifact
+        run: dir ${{ github.workspace }}
+        shell: pwsh
+
+      - name: List contents of downloaded artifact
         run: dir ${{ github.workspace }}/myapp
         shell: pwsh
 
