@@ -1,9 +1,6 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
 name: Build and deploy ASP.Net Core app to Azure Web App - win23jsbackend-anggelick
 
 on:
@@ -28,21 +25,21 @@ jobs:
         run: dotnet build --configuration Release
 
       - name: Publish with dotnet
-        run: dotnet publish -c Release -o ./myapp
+        run: dotnet publish -c Release -o './myapp'
 
       - name: List contents of the DOTNET_ROOT directory
-        run: dir ${{env.DOTNET_ROOT}}
+        run: dir "$env:DOTNET_ROOT"
         shell: pwsh
 
       - name: List contents of myapp directory
-        run: dir ./myapp
+        run: dir './myapp'
         shell: pwsh
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: .net-app
-          path: ./myapp
+          path: './myapp'
 
   deploy:
     runs-on: windows-latest
@@ -58,7 +55,7 @@ jobs:
           name: .net-app
 
       - name: List contents of the downloaded artifact
-        run: dir ./myapp
+        run: dir './myapp'
         shell: pwsh
 
       - name: Deploy to Azure Web App
